@@ -2,7 +2,7 @@ var express = require('express')
 var app = express();
 var mongoose = require('mongoose')
 var bodyParser = require('body-parser')
-const port = process.ENV.PORT || 4400;
+const port = process.env.PORT || 4400;
 var cors = require('cors')
 var Post = require('./models/post')
 var Collection = require('./models/collection')
@@ -16,7 +16,7 @@ mongoose.connect('mongodb://Hasstrup:Onosetale32@ds111066.mlab.com:11066/paper-s
     useMongoClient: true
 });
 
-LoadDB(); 
+LoadDB();
 
 
 
