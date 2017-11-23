@@ -6,6 +6,7 @@ const port = process.env.PORT || 4400;
 var cors = require('cors')
 var Post = require('./models/post')
 var Collection = require('./models/collection')
+var Query = require('./models/super')
 var LoadDB = require('./load')
 
 app.use(cors());
@@ -17,12 +18,17 @@ mongoose.connect('mongodb://Hasstrup:Onosetale32@ds111066.mlab.com:11066/paper-s
 });
 
 
-
-
 var postRoute = require('./routes/post')
 var collectionRoute = require('./routes/collection')
+var SearchRoute = require('./routes/search')
+
 
 app.use(postRoute);
+app.use(collectionRoute);
+app.use(SearchRoute)
+
+
+
 app.use(collectionRoute);
 
 app.listen(port, function(){

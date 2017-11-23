@@ -11,18 +11,32 @@ Router.get('/posts', function(req, res){
       res.json({posts:posts})
     }})})
 
+    Router.get('/api/posts', function(req, res){
+      Post.find({}, function(err, posts){
+        if(err){
+          console.log('there is an error here' + err)
+        } else {
+          var splicedposts: posts.splice(0, 301)
+          res.json({posts: splicedposts})
+        }})})
+
+
+
 Router.get('/post/new', function(req, res){
       Collection.find({}, function(err, collections){ //doing this so that you can assign it a collection on creation
         if(err) {
           console.log('oops another error here' + err)
         } else {
+          var collectionsss = collections.filter(collection => collection.name !== 'random' && collection.isTopLevel == 'false')
           Post.find({}, function(err, posts){
             if(err) {
               console.log(err)
             } else {
-              res.json({collections: collections, posts:posts})
-            }
-          })}})})
+              res.json({collections: collectionsss, posts:posts})
+            }})}})})
+
+
+
 
 Router.get('/post/:id', function(req, res){
   Post.findById(req.params.id, function(err, post){
@@ -33,8 +47,9 @@ Router.get('/post/:id', function(req, res){
     }})})
 
 
+
 Router.post('/post', function(req, res){
-  var newpost = {link: req.body.link}
+  var newpost = {link: req.body.link, title: req.body.title, resolution: req.body.resolution}
   Post.create(newpost, function(err, post){
     if(err) {
       console.log(err)
@@ -42,7 +57,9 @@ Router.post('/post', function(req, res){
       post.creator.name = req.body.creatorname
       post.creator.link = req.body.creatorlink
       post.save();
-      //when you create a post with no collection, it gives it the collection 'Uncategorized' by default
+
+      console.log(post.tags)
+
       if(req.body.collection !== ''){
         Collection.findById(req.body.collection, function(err, collection){
           if(err){
@@ -51,24 +68,64 @@ Router.post('/post', function(req, res){
             post.collectionn.name = collection.name
             post.collectionn.id = collection._id
             post.save();
+
+            if(req.body.tags.length > 0){
+            var filteredstuff = req.body.tags.filter(item => item.length > 1)
+            filteredstuff.forEach(tag => {
+                post.tags.push(tag)
+                post.update()
+             })} else {}
+
             collection.posts.push(post)
             collection.save()
+            console.log(post.tags)
             res.json({status: 200})
-          }
-        })}
+          }})}
+
         else {
-          Collection.findOne({'name': "Uncategorized"}, function(err, collection){
+          console.log('take a break here')
+          console.log(post.tags)
+          Collection.findOne({'name': "random"}, function(err, collection){
             if(err) {
               console.log(err)
             } else {
               post.collectionn.name = collection.name
               post.collectionn.id = collection._id
               post.save();
+
+              if(req.body.tags.length > 0){
+              var filteredstuff = req.body.tags.filter(item => item.length > 1)
+              filteredstuff.forEach(tag => {
+                  post.tags.push(tag)
+                  post.update()
+               })} else {}
+
               collection.posts.push(post)
               collection.save()
               res.json({})
-            }
-          })}}})})
+            }})}}})})
+
+
+
+Router.post('/addtag/:id', function(req,res){
+  Post.findById(req.params.id, function(err, post){
+    if(err) {
+      console.log(err)
+    } else {
+      var filteredstuff = req.body.tags.filter(item => item.length > 1)
+      filteredstuff.forEach(tag => {
+        if(post.tags.indexOf(tag) === -1 ) {
+          Post.findByIdAndUpdate(req.params.id, {$push: {tags: tag}}, function(err, post){
+            if(err) {
+              console.log(err)
+            } else {
+
+            }})}
+             else {
+          return null }})
+          res.json({})
+    }})})
+
 
 
 Router.get('/post/:id/edit', function(req, res){
@@ -85,8 +142,8 @@ Router.get('/post/:id/edit', function(req, res){
                     console.log(err)
                   } else {
                     res.json({post:post, collections:collections, posts:posts})
-                  }
-                })}})}})})
+                  }})}})}})})
+
 
 
 //I'm editing the edit route to allow us only change the collection of the post
@@ -116,6 +173,8 @@ Router.put('/post/:id', function(req, res){
              console.log('changed it')
              res.json()
         }})}})}})})
+
+
 
 
 Router.delete('/post/:id', function(req, res){
