@@ -407,7 +407,7 @@ Router.delete('/collection/:id', function(req, res){
 
                 //if it has a parent as well
                 if(i_collection.parent.id !== null) {
-                Collection.findByIdAndUpdate(i_collection.parent.id, {$pull: {children: {_id: i_collection._id} }} function (err, supercollection){
+                Collection.findByIdAndUpdate(i_collection.parent.id, {$pull: {children: {_id: i_collection._id} }}, function (err, supercollection){
                   if(err) {
                     console.log(err)
                   } else {
