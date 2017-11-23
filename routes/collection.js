@@ -31,7 +31,7 @@ if(err) {
       else {
           var higherorder = collections.filter( collection => collection.isTopLevel === 'true')
           var lowerorder = collections.filter( collection => collection.isTopLevel == undefined || collection.isTopLevel === 'false')
-          var filteredd = lowerorder.splice(0, 101)
+          var filteredd = lowerorder.splice(0, 101).reverse()
           res.json({collections:filtered, postarray:posts})
     }})}})})
 

@@ -16,7 +16,7 @@ Router.get('/posts', function(req, res){
         if(err){
           console.log('there is an error here' + err)
         } else {
-          var splicedposts = posts.splice(0, 301)
+          var splicedposts = posts.splice(0, 301).reverse()
           res.json({posts: splicedposts})
         }})})
 
