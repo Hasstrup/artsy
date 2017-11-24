@@ -5,7 +5,6 @@ var Collection = require('../models/collection')
 
 
 
-
 Router.get('/collections', function(req, res){
   Collection.find({}, function(err, collections){
     if(err) {
@@ -20,6 +19,9 @@ Router.get('/collections', function(req, res){
           res.json({collections:collections, postarray:posts, higherorder:higherorder, lowerorder:lowerorder })
         }})}})})
 
+
+
+
 Router.get('/api/collections', function(req, res){
 Collection.find({}, function(err, collections){
 if(err) {
@@ -32,7 +34,7 @@ if(err) {
           var higherorder = collections.filter( collection => collection.isTopLevel === 'true')
           var lowerorder = collections.filter( collection => collection.isTopLevel == undefined || collection.isTopLevel === 'false')
           var filteredd = lowerorder.splice(0, 101).reverse()
-          res.json({collections:filtered, postarray:posts})
+          res.json({collections:filteredd, postarray:posts})
     }})}})})
 
 
@@ -115,6 +117,7 @@ Collection.findById(req.params.id, function(err, collections){
 
 
 
+
 //clear
 Router.get('/newnestxx/:id', function(req, res){
   console.log('im here')
@@ -141,11 +144,11 @@ Router.get('/newnestxx/:id', function(req, res){
 
 
 
+
   Router.get('/newnest', function(req, res){
   Collection.find({}, function(err, collections){
   if(err){
   console.log(err)}
-
   else {
   var level1 = collections.filter(collection => collection.name !== 'random' && collection.parent !== undefined )
   var level2 = level1.filter(collection => collection.parent.id == null && collection.parent.name == null)
@@ -348,6 +351,7 @@ Router.get('/nest/:id', function(req, res){
                   var secondlevel = collectionns.filter(collection => collection.posts.length > 0)
                   res.json({collection: collectionbb, toplevel:toplevel, secondlevel:secondlevel, posts:posts, collections:collections })
                 }})}})}})})
+
 
 
 
