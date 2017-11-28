@@ -49,7 +49,7 @@ Router.get('/post/:id', function(req, res){
 
 
 Router.post('/post', function(req, res){
-  var newpost = {link: req.body.link, title: req.body.title, resolution: req.body.resolution}
+  var newpost = {link: req.body.link, title: req.body.title, resolution: req.body.resolution, thumbnail: req.body.thumbnail}
   Post.create(newpost, function(err, post){
     if(err) {
       console.log(err)

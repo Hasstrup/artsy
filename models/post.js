@@ -3,6 +3,7 @@ var mongoose = require('mongoose')
 var postSchema = new mongoose.Schema ({
     title: String,
     link: String,
+    thumbnail: String
     tags: [],
     creator: {name: String, link: String, required: false},
     collectionn: {name: String, id:{
