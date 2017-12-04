@@ -82,7 +82,7 @@ Collection.findById(req.params.id, function(err, collections){
         } else {
         var postarray = [];
         var collectionarray = []
-        if(collections.posts.length > 0)
+        if( collections !== null && collections.posts.length > 0)
         {
 
           collections.posts.forEach(function(post){
@@ -99,7 +99,7 @@ Collection.findById(req.params.id, function(err, collections){
                 res.json({ collections:collection, postarray:postarray})
               }})}
 
-              else if( collections.children.length > 0) {
+              else if( collections !== null && collections.children.length > 0) {
                 collections.children.forEach(function(collection){
                   Collection.findById(collection, function(err, collectionz){
                     collectionarray.push(collectionz)
@@ -173,7 +173,7 @@ Router.post('/collection', function(req, res){
   var first = phase1.charAt(0).toUpperCase()
   var second = phase1.slice(1, phase1.length)
   var final = first.concat(second)
-  
+
   var newcollection = {name: final}
   Collection.create(newcollection, function(err, collection){
     if(err){

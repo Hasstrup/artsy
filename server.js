@@ -31,7 +31,7 @@ mongoose.connect('mongodb://Hasstrup:Onosetale32@ds111066.mlab.com:11066/paper-s
 
 
 
-
+LoadDB();
 
 var postRoute = require('./routes/post')
 var collectionRoute = require('./routes/collection')
