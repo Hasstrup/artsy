@@ -54,7 +54,7 @@ Router.post('/post', function(req, res){
   var phase1 = req.body.title.trim()
   var first = phase1.charAt(0).toUpperCase()
   var second = phase1.slice(1, phase1.length)
-  var final = first.concat(second)  
+  var final = first.concat(second)
   var newpost = {link: req.body.link, title: final, resolution: req.body.resolution, thumbnail: req.body.thumbnail}
   Post.create(newpost, function(err, post){
     if(err) {
@@ -188,12 +188,10 @@ Router.delete('/post/:id', function(req, res){
     if(err){
       console.log(err)
     } else {
-      Collection.findById(post.collectionn.id,  function(err, collection){
+      Collection.findByIdAndUpdate(post.collectionn.id, {$pull: {posts: {_id: post._id}} } function(err, collection){
         if(err){
           console.log(err)
         } else {
-            collection.posts.pull({_id: post._id})
-              collection.save()
               console.log('removing')
               post.remove();
               res.json({})
