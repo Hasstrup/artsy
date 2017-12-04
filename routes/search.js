@@ -8,12 +8,25 @@ var Query = require('../models/super')
 
 Router.get('/search/:query', function(req, res, next){
   //this first part basically splits the incoming url into a string
+  let phase
   let query
+  let phase1
+  let first
+  let second
   if(req.params.query.indexOf('-') == -1) {
-    query = req.params.query
-  } else {
-    var newquery = req.params.query.toLowerCase();
-    query = newquery.replace(/-/g, ' ')
+    phase = req.params.query.toLowerCase()
+    phase1 = phase.trim()
+    first = phase1.charAt(0).toUpperCase()
+    second = phase1.slice(1, phase1.length)
+     query = first.concat(second)
+  }
+
+  else {
+    var newquery = req.params.query.toLowerCase().trim()
+    var newquery1 = newquery.replace(/-/g, ' ')
+    first = newquery1.charAt(0).toUpperCase()
+    second = newquery1.slice(1, newquery1.length)
+    query = first.concat(second)
   }
 
 Collection.find({}, function(err, collectionsxx){
@@ -107,7 +120,8 @@ var secondlevel = collectionsxx.filter(collection => collection.posts.length !==
 
      //start of phase 4
      var arrayedtags = []
-      var postswithtags = posts.filter(post => post.tags !== undefined && post.tags.indexOf(query) !== -1)
+     //made a change here
+      var postswithtags = posts.filter(post => post.tags !== undefined && post.tags.indexOf(query.toLowerCase()) !== -1)
       postswithtags.forEach(post => {
         arrayedtags.push(post._id)
       })
@@ -139,8 +153,7 @@ var secondlevel = collectionsxx.filter(collection => collection.posts.length !==
     var resultss = []
     var collectionpostss = []
     var anotherlevel = [];
-
-    var to_be_searched = query.split(' ').splice(0, 6)
+    var to_be_searched = query.toLowerCase().split(' ').splice(0, 6)
 
       to_be_searched.map( string => {
         var filter1 = posts.filter(post => post.tags !== undefined )

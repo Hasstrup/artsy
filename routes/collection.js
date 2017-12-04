@@ -168,7 +168,13 @@ Router.get('/newnestxx/:id', function(req, res){
 
 
 Router.post('/collection', function(req, res){
-  var newcollection = {name: req.body.name}
+  //you need to test this method
+  var phase1 = req.body.name.trim()
+  var first = phase1.charAt(0).toUpperCase()
+  var second = phase1.slice(1, phase1.length)
+  var final = first.concat(second)
+  
+  var newcollection = {name: final}
   Collection.create(newcollection, function(err, collection){
     if(err){
       console.log(err)

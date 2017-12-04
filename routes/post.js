@@ -3,6 +3,8 @@ var Router = express.Router();
 var Post = require('../models/post')
 var Collection = require('../models/collection')
 
+
+
 Router.get('/posts', function(req, res){
   Post.find({}, function(err, posts){
     if(err){
@@ -49,7 +51,11 @@ Router.get('/post/:id', function(req, res){
 
 
 Router.post('/post', function(req, res){
-  var newpost = {link: req.body.link, title: req.body.title, resolution: req.body.resolution, thumbnail: req.body.thumbnail}
+  var phase1 = req.body.title.trim()
+  var first = phase1.charAt(0).toUpperCase()
+  var second = phase1.slice(1, phase1.length)
+  var final = first.concat(second)  
+  var newpost = {link: req.body.link, title: final, resolution: req.body.resolution, thumbnail: req.body.thumbnail}
   Post.create(newpost, function(err, post){
     if(err) {
       console.log(err)
@@ -72,7 +78,7 @@ Router.post('/post', function(req, res){
             if(req.body.tags.length > 0){
             var filteredstuff = req.body.tags.filter(item => item.length > 1)
             filteredstuff.forEach(tag => {
-                post.tags.push(tag)
+                post.tags.push(tag.toLowerCase())
                 post.update()
              })} else {}
 

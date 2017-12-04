@@ -17,6 +17,10 @@ app.use(bodyParser.urlencoded({extended: false}));
 mongoose.connect('mongodb://Hasstrup:Onosetale32@ds111066.mlab.com:11066/paper-stack', {
     useMongoClient: true });
 
+// mongoose.connect("mongodb://localhost/artsy", {
+//     useMongoClient: true,
+// });
+
 
 // var MongoClient = require('mongodb').MongoClient;
 //
