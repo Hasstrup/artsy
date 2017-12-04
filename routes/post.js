@@ -188,7 +188,7 @@ Router.delete('/post/:id', function(req, res){
     if(err){
       console.log(err)
     } else {
-      Collection.findByIdAndUpdate(post.collectionn.id, {$pull: {posts: {_id: post._id}} } function(err, collection){
+      Collection.findByIdAndUpdate(post.collectionn.id, {$pull: {posts: {_id: post._id}} }, function(err, collection){
         if(err){
           console.log(err)
         } else {
