@@ -144,7 +144,7 @@ Router.post('/post/oftheweek/:id', function(req, res){
          post.save()
          res.json({})
        } else {
-         post.ofTheWeek == 'false'
+         post.ofTheWeek = 'false'
          post.save()
          res.json({})
        }}})})
