@@ -268,7 +268,7 @@ Router.get('/collection/:id/edit', function(req, res){
     }})})
 
 
-Router.post('collection/oftheweek/:id', function(req, res){
+Router.post('/collection/oftheweek/:id', function(req, res){
   Collection.findById(req.params.id, function(err, collection){
     if(err) {
       console.log(err)
