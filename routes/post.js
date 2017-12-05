@@ -91,7 +91,7 @@ Router.post('/post', function(req, res){
         else {
           console.log('take a break here')
           console.log(post.tags)
-          Collection.findOne({'name': "random"}, function(err, collection){
+          Collection.findOne({'name': "Random"}, function(err, collection){
             if(err) {
               console.log(err)
             } else {

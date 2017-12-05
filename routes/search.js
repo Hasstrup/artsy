@@ -117,7 +117,7 @@ var secondlevel = collectionsxx.filter(collection => collection.posts.length !==
         if(filteredposts.length > 0){
 
           var relatedcollectionnnns = []
-          var secondfilter = filteredposts.filter(post => post.collectionn.name !== 'random')
+          var secondfilter = filteredposts.filter(post => post.collectionn.name !== 'Random')
 
           secondfilter.forEach(postsss => {
             var index = collectionsxx.filter(collection => collection.name === postsss.collectionn.name)
@@ -144,7 +144,7 @@ var secondlevel = collectionsxx.filter(collection => collection.posts.length !==
       var relatedposts2 = []
       if (postswithtags.length > 0) {
         var relatedcollections = []
-        var filter = postswithtags.filter(post => post.collectionn.name !== 'random')
+        var filter = postswithtags.filter(post => post.collectionn.name !== 'Random')
 
           filter.forEach(postx => {
           var approach = collectionsxx.filter(collection => collection.name === postx.collectionn.name )

@@ -42,7 +42,7 @@ if(err) {
 
 
 Router.get('/collection/new', function(req, res){
-      Collection.findOne({'name': 'random'}, function(err, collection){
+      Collection.findOne({'name': 'Random'}, function(err, collection){
         if(err){
           console.log(err)
         }
@@ -127,7 +127,7 @@ Router.get('/newnestxx/:id', function(req, res){
         console.log(err) }
 
          else {
-        var level1 = collections.filter(collection => collection.name !== 'random' && collection.parent !== undefined)
+        var level1 = collections.filter(collection => collection.name !== 'Random' && collection.parent !== undefined)
         var level2 = level1.filter(collection => collection.parent.id !== null && collection.parent.name !== null)
         var level3 = level1.filter(collection => collection.parent.id == null && collection.parent.name == null && collection.children.length > 0)
         var level4 = level1.filter(collection =>  collection.parent.id == null && collection.parent.name == null && collection.posts.length !== 0)
@@ -150,7 +150,7 @@ Router.get('/newnestxx/:id', function(req, res){
   if(err){
   console.log(err)}
   else {
-  var level1 = collections.filter(collection => collection.name !== 'random' && collection.parent !== undefined )
+  var level1 = collections.filter(collection => collection.name !== 'Random' && collection.parent !== undefined )
   var level2 = level1.filter(collection => collection.parent.id == null && collection.parent.name == null)
   var level3 = level1.filter(collection => collection.parent.id == null && collection.parent.name == null && collection.children.length > 0)
   var level4 = level1.filter(collection => collection.parent.id == null && collection.parent.name == null && collection.posts.length !== 0)
@@ -434,7 +434,7 @@ Router.delete('/collection/:id', function(req, res){
             if(err){
               console.log(err)
             } else {
-              Collection.findOne({'name': 'random'}, function(err, ucollection){
+              Collection.findOne({'name': 'Random'}, function(err, ucollection){
                 if(err){
                   console.log(err)
                 } else {
