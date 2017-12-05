@@ -289,11 +289,16 @@ Router.post('/collection/oftheweek/:id', function(req, res){
           }
           else {
             var collectionsxx = collectionx[0]
-            collectionsxx.ofTheWeek = 'false'
-            collectionsxx.save()
+            if(collectionsxx !== undefined) {
+              collectionsxx.ofTheWeek = 'false'
+              collectionsxx.save()
+              collection.ofTheWeek = 'true'
+              collection.save()
+              res.json({})
+            } else {
             collection.ofTheWeek = 'true'
             collection.save()
-            res.json({})
+            res.json({}) }
           }}})}})})
 
 
