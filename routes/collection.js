@@ -86,11 +86,11 @@ Collection.findById(req.params.id, function(err, collections){
         {
 
           collections.posts.forEach(function(post){
-          Post.findById(post._id, function(err, post){
+          Post.findById(post._id, function(err, postx){
           if(err){
             console.log(err)
                 } else {
-                    postarray.push(post)
+                    postarray.push(postx)
                 }})})
             Collection.findById(req.params.id, function(err, collection){
               if(err){

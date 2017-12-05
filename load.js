@@ -3,7 +3,7 @@ var Collection = require('./models/collection')
 var Query = require('./models/super')
 
 function LoadDB() {
-var uncategorized = {name: 'random', posts: [], isToplevel: 'false', ofTheWeek: 'false'}
+var uncategorized = {name: 'Random', posts: [], isToplevel: 'false', ofTheWeek: 'false'}
 
 Collection.create(uncategorized, function(err, collection){
   if(err) {
