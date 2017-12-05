@@ -16,7 +16,7 @@ Router.get('/search', function(req, res) {
           console.log(err)
         } else {
           var postarray = posts.filter(post => post.ofTheWeek === 'true')
-          res.json({ collectionoftheweek: collectionx, postsoftheweek: postarray})
+          res.json({ collectionoftheweek: collectionx, postsoftheweek: postarray, postarray: posts})
         }})}})})
 
 
