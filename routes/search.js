@@ -7,7 +7,7 @@ var Query = require('../models/super')
 
 
 Router.get('/search', function(req, res) {
-  Collection.findOne({'ofTheWeek': 'true'}, function(err, collectionx){
+  Collection.find({'ofTheWeek': 'true'}, function(err, collectionx){
     if(err) {
       console.log(err)
     } else {
