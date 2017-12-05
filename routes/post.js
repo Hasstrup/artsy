@@ -205,10 +205,12 @@ Router.delete('/post/:id', function(req, res){
     if(err){
       console.log(err)
     } else {
-      Collection.findByIdAndUpdate(post.collectionn.id, {$pull: {posts: {_id: post._id}} }, function(err, collection){
+      Collection.findById(post.collectionn.id, function(err, collection){
         if(err){
           console.log(err)
         } else {
+              collection.posts.pull({_id: post._id})
+              collection.save()
               console.log('removing')
               post.remove();
               res.json({})
