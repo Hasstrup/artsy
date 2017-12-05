@@ -84,19 +84,16 @@ Collection.findById(req.params.id, function(err, collections){
         var collectionarray = []
         if( collections !== null && collections.posts.length > 0)
         {
-
           collections.posts.forEach(function(post){
           Post.findById(post._id, function(err, postx){
-          if(err){
-            console.log(err)
-                } else {
-                    postarray.push(postx)
-                }})})
-            Collection.findById(req.params.id, function(err, collection){
+            postarray.push(postx)
+                })})
+
+            Post.find({}, function(err, posts){
               if(err){
                 console.log(err)
               } else {
-                res.json({ collections:collection, postarray:postarray})
+                res.json({ collections:collections, postarray:postarray})
               }})}
 
               else if( collections !== null && collections.children.length > 0) {
