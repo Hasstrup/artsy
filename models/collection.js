@@ -5,6 +5,7 @@ var collectionSchema = new mongoose.Schema ({
   posts: [{ id:{ type: mongoose.Schema.Types.ObjectId,  ref: 'Post'}}],
   name: String,
   isTopLevel: String,
+  ofTheWeek: String,
   parent: {name: String, id:{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Collection'},

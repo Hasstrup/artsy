@@ -174,7 +174,7 @@ Router.post('/collection', function(req, res){
   var second = phase1.slice(1, phase1.length)
   var final = first.concat(second)
 
-  var newcollection = {name: final}
+  var newcollection = {name: final, ofTheWeek: 'false'}
   Collection.create(newcollection, function(err, collection){
     if(err){
       console.log(err)
@@ -268,7 +268,33 @@ Router.get('/collection/:id/edit', function(req, res){
     }})})
 
 
-
+Router.post('collection/oftheweek/:id', function(req, res){
+  Collection.findById(req.params.id, function(err, collection){
+    if(err) {
+      console.log(err)
+    } else {
+      Collection.find({ofTheWeek: 'true'}, function(err, collectionx){
+        if(err) {
+          console.log(err)
+        } else {
+          //this should make sure only one collection can be collection of the week
+          if (collectionx.length > 1) {
+            collectionx.forEach(collectionsx => {
+              collectionsx.ofTheWeek = 'false'
+              collectionsx.save()
+            })
+            collection.ofTheWeek = 'true'
+            collection.save()
+            res.json({})
+          }
+          else {
+            var collectionsxx = collectionx[0]
+            collectionsxx.ofTheWeek = 'false'
+            collectionsxx.save()
+            collection.ofTheWeek = 'true'
+            collection.save()
+            res.json({})
+          }}})}})})
 
 
 //if you want to nest a collection in another one after creating a top level collection

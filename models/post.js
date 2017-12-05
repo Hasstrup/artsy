@@ -5,6 +5,7 @@ var postSchema = new mongoose.Schema ({
     link: String,
     thumbnail: String,
     tags: [],
+    ofTheWeek: String,
     creator: {name: String, link: String, required: false},
     collectionn: {name: String, id:{
         type: mongoose.Schema.Types.ObjectId,

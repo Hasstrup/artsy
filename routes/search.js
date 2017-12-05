@@ -6,6 +6,20 @@ var Query = require('../models/super')
 
 
 
+Router.get('/search', function(req, res) {
+  Collection.findOne({'ofTheWeek': 'true'}, function(err, collectionx){
+    if(err) {
+      console.log(err)
+    } else {
+      Post.find({}, function(err, posts){
+        if(err) {
+          console.log(err)
+        } else {
+          var postarray = posts.filter(post => post.ofTheWeek === 'true')
+          res.json({ collectionoftheweek: collectionx, postsoftheweek: postarray})
+        }})}})})
+
+
 Router.get('/search/:query', function(req, res, next){
   //this first part basically splits the incoming url into a string
   let phase
@@ -20,8 +34,9 @@ Router.get('/search/:query', function(req, res, next){
     second = phase1.slice(1, phase1.length)
      query = first.concat(second)
   }
+  else
 
-  else {
+  {
     var newquery = req.params.query.toLowerCase().trim()
     var newquery1 = newquery.replace(/-/g, ' ')
     first = newquery1.charAt(0).toUpperCase()

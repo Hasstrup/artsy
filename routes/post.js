@@ -55,7 +55,7 @@ Router.post('/post', function(req, res){
   var first = phase1.charAt(0).toUpperCase()
   var second = phase1.slice(1, phase1.length)
   var final = first.concat(second)
-  var newpost = {link: req.body.link, title: final, resolution: req.body.resolution, thumbnail: req.body.thumbnail}
+  var newpost = {link: req.body.link, title: final, resolution: req.body.resolution, thumbnail: req.body.thumbnail, ofTheWeek: 'false'}
   Post.create(newpost, function(err, post){
     if(err) {
       console.log(err)
@@ -131,6 +131,23 @@ Router.post('/addtag/:id', function(req,res){
           return null }})
           res.json({})
     }})})
+
+
+Router.post('/post/oftheweek/:id', function(req, res){
+  Post.findById(req.params.id, function(err, post){
+    if(err)
+     {
+       console.log(err)
+     } else {
+       if(post.ofTheWeek === 'false'){
+         post.ofTheWeek = 'true'
+         post.save()
+         res.json({})
+       } else {
+         post.ofTheWeek == 'false'
+         post.save()
+         res.json({})
+       }}})})
 
 
 
