@@ -189,7 +189,7 @@ Router.put('/post/:id', function(req, res){
               } else {
                 console.log('found it')
              post.collectionn.name = collection.name
-             post.collection.id = collection._id
+             post.collectionn.id = collection._id
              post.save()
              collection.posts.push(post)
              collection.save()
