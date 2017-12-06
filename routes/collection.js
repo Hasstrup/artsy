@@ -214,7 +214,7 @@ Router.post('/collection', function(req, res){
               if(err) {
                 console.log(err)
               } else {
-                collection.posts.push(postx)
+                collection.posts.push({'_id': postx})
                 collection.save();
                 Collection.findByIdAndUpdate(postx.collectionn.id, {$pull: {posts: {_id:postx._id} }}, function(err, random){
                   if(err){
@@ -439,7 +439,7 @@ Router.delete('/collection/:id', function(req, res){
                   post.collectionn.id = ucollection._id
                   post.save();
                   if(ucollection.indexOf(post) == -1){
-                  ucollection.posts.push(post)
+                  ucollection.posts.push({'_id': post})
                   ucollection.save()} else { }
                 }})}})})
 
