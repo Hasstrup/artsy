@@ -179,6 +179,7 @@ Router.put('/post/:id', function(req, res){
         if(err){
           console.log(err)
         } else {
+          console.log(post.collectionn.id)
             var index = oldcollection.posts.indexOf(post._id)
             oldcollection.posts.pull({_id: post._id})
             console.log('popped it off')
