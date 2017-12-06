@@ -209,7 +209,7 @@ Router.delete('/post/:id', function(req, res){
         if(err){
           console.log(err)
         } else {
-              collection.posts.pull({_id: post})
+              collection.posts.pull({_id: post._id})
               collection.save()
               console.log('removing')
               post.remove();
