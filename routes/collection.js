@@ -430,7 +430,7 @@ Router.delete('/collection/:id', function(req, res){
                   post.collectionn.id = ucollection._id
                   post.save();
                   if(ucollection.indexOf(post) == -1){
-                  ucollection.posts.push({'_id': post})
+                  ucollection.posts.push(post)
                   ucollection.save()} else { }
                 }})}})})
 
