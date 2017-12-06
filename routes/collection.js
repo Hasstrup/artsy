@@ -205,7 +205,7 @@ Router.post('/collection', function(req, res){
               if(err) {
                 console.log(err)
               } else {
-                collection.posts.push({'_id': postx})
+                collection.posts.push(postx)
                 collection.save();
                 Collection.findByIdAndUpdate(postx.collectionn.id, {$pull: {posts: {_id:postx._id} }}, function(err, random){
                   if(err){
