@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var collectionSchema = new mongoose.Schema ({
   children: [],
-  posts: [{ id:{ type: mongoose.Schema.Types.ObjectId,  ref: 'Post'}}],
+  posts: [],
   name: String,
   isTopLevel: String,
   ofTheWeek: String,
