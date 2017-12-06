@@ -41,7 +41,7 @@ app.use(postRoute);
 app.use(collectionRoute);
 app.use(SearchRoute)
 
-LoadDb()
+LoadDB()
 
 app.use(collectionRoute);
 
