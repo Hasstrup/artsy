@@ -14,11 +14,11 @@ Router.get('/posts', function(req, res){
     }})})
 
     Router.get('/api/posts', function(req, res){
-      Post.find({}, function(err, posts){
+      Post.find({}).sort({ count: -1}).exec(function(err, posts){
         if(err){
           console.log('there is an error here' + err)
         } else {
-          var splicedposts = posts.splice(0, 301).reverse()
+          var splicedposts = posts.splice(0, 301)
           res.json({posts: splicedposts})
         }})})
 
@@ -51,48 +51,28 @@ Router.get('/post/:id', function(req, res){
 
 
 Router.post('/post', function(req, res){
-  var phase1 = req.body.title.trim()
-  var first = phase1.charAt(0).toUpperCase()
-  var second = phase1.slice(1, phase1.length)
-  var final = first.concat(second)
-  var newpost = {link: req.body.link, title: final, resolution: req.body.resolution, thumbnail: req.body.thumbnail, ofTheWeek: 'false'}
-  Post.create(newpost, function(err, post){
-    if(err) {
-      console.log(err)
-    } else {
-      post.creator.name = req.body.creatorname
-      post.creator.link = req.body.creatorlink
-      post.save();
 
-      console.log(post.tags)
+Post.find({}, function(err, postslength){
+  if(err) {
+    console.log(err)
+  } else {
+    var phase1 = req.body.title.trim()
+    var first = phase1.charAt(0).toUpperCase()
+    var second = phase1.slice(1, phase1.length)
+    var final = first.concat(second)
+    var count = postslength.length + 1
+    var newpost = {link: req.body.link, title: final, resolution: req.body.resolution, thumbnail: req.body.thumbnail, ofTheWeek: 'false', count: count}
+    Post.create(newpost, function(err, post){
+      if(err) {
+        console.log(err)
+      } else {
+        post.creator.name = req.body.creatorname
+        post.creator.link = req.body.creatorlink
+        post.save();
 
-      if(req.body.collection !== ''){
-        Collection.findById(req.body.collection, function(err, collection){
-          if(err){
-            console.log(err)
-          } else {
-            post.collectionn.name = collection.name
-            post.collectionn.id = collection._id
-            post.save();
-
-            if(req.body.tags.length > 0){
-            var filteredstuff = req.body.tags.filter(item => item.length > 1)
-            filteredstuff.forEach(tag => {
-                post.tags.push(tag.toLowerCase())
-                post.update()
-             })} else {}
-
-            collection.posts.push(post)
-            collection.save()
-            console.log(post.tags)
-            res.json({status: 200})
-          }})}
-
-        else {
-          console.log('take a break here')
-          console.log(post.tags)
-          Collection.findOne({'name': "Random"}, function(err, collection){
-            if(err) {
+        if(req.body.collection !== ''){
+          Collection.findById(req.body.collection, function(err, collection){
+            if(err){
               console.log(err)
             } else {
               post.collectionn.name = collection.name
@@ -102,14 +82,40 @@ Router.post('/post', function(req, res){
               if(req.body.tags.length > 0){
               var filteredstuff = req.body.tags.filter(item => item.length > 1)
               filteredstuff.forEach(tag => {
-                  post.tags.push(tag)
+                  post.tags.push(tag.toLowerCase())
                   post.update()
                })} else {}
 
               collection.posts.push(post)
               collection.save()
-              res.json({})
-            }})}}})})
+              console.log(post.tags)
+              res.json({status: 200})
+            }})}
+
+          else {
+            console.log('take a break here')
+            console.log(post.tags)
+            Collection.findOne({'name': "Random"}, function(err, collection){
+              if(err) {
+                console.log(err)
+              } else {
+                post.collectionn.name = collection.name
+                post.collectionn.id = collection._id
+                post.save();
+
+                if(req.body.tags.length > 0){
+                var filteredstuff = req.body.tags.filter(item => item.length > 1)
+                filteredstuff.forEach(tag => {
+                    post.tags.push(tag)
+                    post.update()
+                 })} else {}
+
+                collection.posts.push(post)
+                collection.save()
+                res.json({})
+              }})}}})
+  }
+})})
 
 
 
