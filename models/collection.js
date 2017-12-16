@@ -6,6 +6,7 @@ var collectionSchema = new mongoose.Schema ({
     thumbnail: {type: String, ref: 'Post'}, title: {type: String, ref: 'Post'}, creator: { name: {type: String, ref: 'Post'}, link:{type: String, ref: 'Post'}}
 }],
   name: String,
+  count: Number,
   isTopLevel: String,
   ofTheWeek: String,
   parent: {name: String, id:{

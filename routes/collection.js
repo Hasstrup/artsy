@@ -23,7 +23,7 @@ Router.get('/collections', function(req, res){
 
 
 Router.get('/api/collections', function(req, res){
-Collection.find({}, function(err, collections){
+Collection.find({}).sort({ count: -1}).exec(function(err, collections){
 if(err) {
       console.log(err)
       } else {
@@ -33,7 +33,7 @@ if(err) {
       else {
           var higherorder = collections.filter( collection => collection.isTopLevel === 'true')
           var lowerorder = collections.filter( collection => collection.posts.length > 0)
-          var filteredd = lowerorder.reverse()
+          var filteredd = lowerorder
           res.json({collections:filteredd, postarray:posts})
     }})}})})
 
@@ -157,92 +157,101 @@ Router.get('/newnestxx/:id', function(req, res){
 
 Router.post('/collection', function(req, res){
   //you need to test this method
-  var phase1 = req.body.name.trim()
-  var first = phase1.charAt(0).toUpperCase()
-  var second = phase1.slice(1, phase1.length)
-  var final = first.concat(second)
-
-  var newcollection = {name: final, ofTheWeek: 'false'}
-  Collection.create(newcollection, function(err, collection){
+  Collection.find({}, function(err, collectionxxx){
     if(err){
       console.log(err)
     } else {
+      var phase1 = req.body.name.trim()
+      var first = phase1.charAt(0).toUpperCase()
+      var second = phase1.slice(1, phase1.length)
+      var final = first.concat(second)
+      var count = collectionxxx.length + 1
 
-      //this saves top level collections
-      if(req.body.collections && req.body.collections.length > 0) {
-        collection.isTopLevel = 'true'
-        collection.parent.name = null
-        collection.parent.id = null
-        collection.save()
-        req.body.collections.map(collectionid => {
-          Collection.findById(collectionid,  function(err, collectionx) {
-            if(err){
-              console.log(err)
-            } else {
-            Collection.findByIdAndUpdate(collection._id, {$push: {children: collectionx} }, function(err, collection){
-              if(err) {
-                console.log(err)
-              } else {
-                collectionx.parent.name = collection.name
-                collectionx.parent.id = collection._id
-                collectionx.save();
-              }})}})})
-               res.json({})}
+      var newcollection = {name: final, ofTheWeek: 'false', count: count }
+      Collection.create(newcollection, function(err, collection){
+        if(err){
+          console.log(err)
+        } else {
 
-
-
-
-        else if( req.body.posts.length > 0)
-
-        {
-          collection.isTopLevel = 'false'
-          collection.parent.id = null
-          collection.parent.name = null
-          collection.save();
-
-          req.body.posts.forEach(post => {
-            Post.findById(post, function(err, postx){
-              if(err) {
-                console.log(err)
-              } else {
-                collection.posts.push(postx)
-                collection.save();
-                Collection.findByIdAndUpdate(postx.collectionn.id, {$pull: {posts: {_id:postx._id} }}, function(err, random){
-                  if(err){
+          //this saves top level collections
+          if(req.body.collections && req.body.collections.length > 0) {
+            collection.isTopLevel = 'true'
+            collection.parent.name = null
+            collection.parent.id = null
+            collection.save()
+            req.body.collections.map(collectionid => {
+              Collection.findById(collectionid,  function(err, collectionx) {
+                if(err){
+                  console.log(err)
+                } else {
+                Collection.findByIdAndUpdate(collection._id, {$push: {children: collectionx} }, function(err, collection){
+                  if(err) {
                     console.log(err)
                   } else {
-                    postx.collectionn.id = collection._id
-                    postx.collectionn.name = collection.name
-                    postx.save()
-                  }
-                })}})})
-                res.json({})}
+                    collectionx.parent.name = collection.name
+                    collectionx.parent.id = collection._id
+                    collectionx.save();
+                  }})}})})
+                   res.json({})}
 
 
 
-            else
+
+            else if( req.body.posts.length > 0)
+
             {
-              if(req.body.isTopLevel && req.body.isTopLevel === 'true') {
-              collection.isTopLevel === 'true'
+              collection.isTopLevel = 'false'
               collection.parent.id = null
               collection.parent.name = null
               collection.save();
-              collection.posts = [];
-              collection.children = [];
-              collection.save();
-              res.json({}) }
 
-              else {
-                collection.isTopLevel === 'false'
-                collection.parent.id = null
-                collection.parent.name = null
-                collection.save();
-              collection.posts = [];
-              collection.children = [];
-              collection.save();
-              res.json({}) }
+              req.body.posts.forEach(post => {
+                Post.findById(post, function(err, postx){
+                  if(err) {
+                    console.log(err)
+                  } else {
+                    collection.posts.push(postx)
+                    collection.save();
+                    Collection.findByIdAndUpdate(postx.collectionn.id, {$pull: {posts: {_id:postx._id} }}, function(err, random){
+                      if(err){
+                        console.log(err)
+                      } else {
+                        postx.collectionn.id = collection._id
+                        postx.collectionn.name = collection.name
+                        postx.save()
+                      }
+                    })}})})
+                    res.json({})}
 
-            }}})})
+
+
+                else
+                {
+                  if(req.body.isTopLevel && req.body.isTopLevel === 'true') {
+                  collection.isTopLevel === 'true'
+                  collection.parent.id = null
+                  collection.parent.name = null
+                  collection.save();
+                  collection.posts = [];
+                  collection.children = [];
+                  collection.save();
+                  res.json({}) }
+
+                  else {
+                    collection.isTopLevel === 'false'
+                    collection.parent.id = null
+                    collection.parent.name = null
+                    collection.save();
+                  collection.posts = [];
+                  collection.children = [];
+                  collection.save();
+                  res.json({}) }
+
+                }}})
+
+    }
+  })
+  })
 
 
 
