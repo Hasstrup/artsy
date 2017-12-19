@@ -45,7 +45,7 @@ Router.post('/download/post/:id', function(req, res){
     } else {
       post.downloads = post.downloads + 1
       post.save()
-      res.json({})
+      res.json({post:post})
     }})})
 
 Router.get('/post/:id', function(req, res){
