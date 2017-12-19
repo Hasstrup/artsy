@@ -15,9 +15,15 @@ Router.get('/search', function(req, res) {
         if(err) {
           console.log(err)
         } else {
-          var postarray = posts.filter(post => post.ofTheWeek === 'true')
-          res.json({ collectionoftheweek: collectionx, postsoftheweek: postarray, postarray: posts})
-        }})}})})
+
+          Post.find({}).sort({downloads: -1}).exec(function(err, postsxxf){
+            if(err) {
+              console.log(err)
+            } else {
+              var postarray = posts.filter(post => post.ofTheWeek === 'true')
+              res.json({ collectionoftheweek: collectionx, postsoftheweek: postarray, postarray: posts, popular: postsxxf})
+            }
+           })}})}})})
 
 
 Router.get('/search/:query', function(req, res, next){
