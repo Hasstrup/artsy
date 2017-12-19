@@ -38,7 +38,15 @@ Router.get('/post/new', function(req, res){
             }})}})})
 
 
-
+Router.post('/download/post/:id', function(req, res){
+  Post.findById(req.params.id, function(err, post){
+    if(err){
+      console.log(err)
+    } else {
+      post.downloads = post.downloads + 1
+      post.save()
+      res.json({})
+    }})})
 
 Router.get('/post/:id', function(req, res){
   Post.findById(req.params.id, function(err, post){
@@ -61,7 +69,7 @@ Post.find({}, function(err, postslength){
     var second = phase1.slice(1, phase1.length)
     var final = first.concat(second)
     var count = postslength.length + 1
-    var newpost = {link: req.body.link, title: final, resolution: req.body.resolution, thumbnail: req.body.thumbnail, ofTheWeek: 'false', count: count}
+    var newpost = {link: req.body.link, title: final, resolution: req.body.resolution, thumbnail: req.body.thumbnail, downloads: 0, ofTheWeek: 'false', count: count}
     Post.create(newpost, function(err, post){
       if(err) {
         console.log(err)

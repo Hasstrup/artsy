@@ -4,6 +4,7 @@ var postSchema = new mongoose.Schema ({
     title: String,
     link: String,
     thumbnail: String,
+    downloads: Number, 
     count: Number,
     tags: [],
     ofTheWeek: String,
