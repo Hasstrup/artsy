@@ -38,7 +38,7 @@ Router.get('/post/new', function(req, res){
             }})}})})
 
 
-Router.post('/download/post/:id', function(req, res){
+Router.get('/download/post/:id', function(req, res){
   Post.findById(req.params.id, function(err, post){
     if(err){
       console.log(err)
