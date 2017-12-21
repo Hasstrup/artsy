@@ -427,7 +427,7 @@ Router.delete('/collection/:id', function(req, res){
           //if it has posts
           else if( i_collection.posts.length !== 0 ) {
           i_collection.posts.forEach(function (post) {
-          Post.findById(post._id, function(err, post){
+          Post.findById(post._id, function(err, postxx){
             if(err){
               console.log(err)
             } else {
@@ -435,11 +435,11 @@ Router.delete('/collection/:id', function(req, res){
                 if(err){
                   console.log(err)
                 } else {
-                  post.collectionn.name = ucollection.name
-                  post.collectionn.id = ucollection._id
-                  post.save();
-                  if(ucollection.posts.indexOf(post) == -1){
-                  ucollection.posts.push(post)
+                  postxx.collectionn.name = ucollection.name
+                  postxx.collectionn.id = ucollection._id
+                  postxx.save();
+                  if(ucollection.posts.indexOf(postxx) == -1){
+                  ucollection.posts.push(postxx)
                   ucollection.save()} else { }
                 }})}})})
 
