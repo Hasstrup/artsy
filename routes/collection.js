@@ -438,7 +438,7 @@ Router.delete('/collection/:id', function(req, res){
                   post.collectionn.name = ucollection.name
                   post.collectionn.id = ucollection._id
                   post.save();
-                  if(ucollection.indexOf(post) == -1){
+                  if(ucollection.posts.indexOf(post) == -1){
                   ucollection.posts.push(post)
                   ucollection.save()} else { }
                 }})}})})
