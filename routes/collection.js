@@ -228,7 +228,7 @@ Router.post('/collection', function(req, res){
                 else
                 {
                   if(req.body.isTopLevel && req.body.isTopLevel === 'true') {
-                  collection.isTopLevel === 'true'
+                  collection.isTopLevel = 'true'
                   collection.parent.id = null
                   collection.parent.name = null
                   collection.save();
@@ -238,7 +238,7 @@ Router.post('/collection', function(req, res){
                   res.json({}) }
 
                   else {
-                    collection.isTopLevel === 'false'
+                    collection.isTopLevel = 'false'
                     collection.parent.id = null
                     collection.parent.name = null
                     collection.save();
