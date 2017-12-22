@@ -437,11 +437,9 @@ Router.delete('/collection/:id', function(req, res){
                 } else {
                   postxx.collectionn.name = ucollection.name
                   postxx.collectionn.id = ucollection._id
-                  postxx.save();
-                  if(ucollection.posts.indexOf(postxx) == -1){
-                    console.log('i am pushing')
+                  postxx.save()
                   ucollection.posts.push(postxx)
-                  ucollection.update()} else { console.log('i am not pushing') }
+                  ucollection.save()
                 }})}})})
 
                 //if it has a parent as well
