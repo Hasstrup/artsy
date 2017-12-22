@@ -29,7 +29,7 @@ Router.get('/post/new', function(req, res){
         if(err) {
           console.log('oops another error here' + err)
         } else {
-          var collectionsss = collections.filter(collection => collection.name !== 'random' && collection.isTopLevel == 'false')
+          var collectionsss = collections.filter(collection => collection.name !== 'Random' && collection.isTopLevel == 'false')
           Post.find({}, function(err, posts){
             if(err) {
               console.log(err)
