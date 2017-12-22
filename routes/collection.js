@@ -441,7 +441,7 @@ Router.delete('/collection/:id', function(req, res){
                   if(ucollection.posts.indexOf(postxx) == -1){
                     console.log('i am pushing')
                   ucollection.posts.push(postxx)
-                  ucollection.save()} else { console.log('i am not pushing') }
+                  ucollection.update()} else { console.log('i am not pushing') }
                 }})}})})
 
                 //if it has a parent as well
