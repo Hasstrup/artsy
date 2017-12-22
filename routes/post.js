@@ -97,9 +97,10 @@ Post.find({}, function(err, postslength){
               collection.posts.push(post)
               collection.save()
               console.log(post.tags)
-              res.json({status: 200})
               var io = req.io;
              io.emit('update');
+              res.json({status: 200})
+
             }})}
 
           else {
@@ -122,9 +123,10 @@ Post.find({}, function(err, postslength){
 
                 collection.posts.push(post)
                 collection.save()
-                res.json({})
                 var io = req.io;
                io.emit('update');
+                res.json({})
+
               }})}}})
   }
 })})
@@ -164,9 +166,10 @@ Router.post('/post/oftheweek/:id', function(req, res){
        } else {
          post.ofTheWeek = 'false'
          post.save()
-         res.json({})
          var io = req.io;
         io.emit('popular');
+         res.json({})
+
        }}})})
 
 
@@ -237,9 +240,10 @@ Router.delete('/post/:id', function(req, res){
               collection.save()
               console.log('removing')
               post.remove();
-              res.json({})
               var io = req.io;
-             io.emit('update');
+             io.emit('update')
+              res.json({})
+            ;
           }})}})})
 
 module.exports = Router;
