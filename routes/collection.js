@@ -192,7 +192,8 @@ Router.post('/collection', function(req, res){
                     collectionx.parent.id = collection._id
                     collectionx.save();
                   }})}})})
-                   res.json({})}
+                   res.json({})
+                 }
 
 
 
@@ -221,7 +222,10 @@ Router.post('/collection', function(req, res){
                         postx.save()
                       }
                     })}})})
-                    res.json({})}
+                    res.json({})
+                    var io = req.io;
+                   io.emit('update');
+                  }
 
 
 
@@ -282,6 +286,8 @@ Router.post('/collection/oftheweek/:id', function(req, res){
             })
             collection.ofTheWeek = 'true'
             collection.save()
+            var io = req.io;
+           io.emit('popular');
             res.json({})
           }
           else {
@@ -295,7 +301,10 @@ Router.post('/collection/oftheweek/:id', function(req, res){
             } else {
             collection.ofTheWeek = 'true'
             collection.save()
-            res.json({}) }
+            res.json({})
+            var io = req.io;
+           io.emit('popular');
+           }
           }}})}})})
 
 
@@ -317,7 +326,7 @@ Router.put('/nest/:id', function(req, res){
             collection.children.push(collectionz)
             collection.save()
           }})})
-          res.json({})
+          res.json({});
     }})})
 
 
@@ -338,7 +347,10 @@ Router.put('/collection/:id', function(req, res){
               post.collectionn.id = collection._id
               post.save()
             }})})
-            res.json({})}
+            res.json({})
+            var io = req.io;
+           io.emit('update');
+          }
 
           else if(collection.children.length !== 0) {
               collection.children.forEach(function(collection){
@@ -350,9 +362,14 @@ Router.put('/collection/:id', function(req, res){
                     collectionx.parent.id = collection._id
                     collectionx.save()
                   }})})
-                  res.json({})}
+                  res.json({})
+                  var io = req.io;
+                 io.emit('update');
+                }
       else {
         res.json({})
+        var io = req.io;
+       io.emit('updatecollection');
       }}})})
 
 
@@ -418,10 +435,14 @@ Router.delete('/collection/:id', function(req, res){
                   } else {
                     i_collection.remove();
                     res.json({})
+                    var io = req.io;
+                   io.emit('updatecollection');
                   }
                 })} else {
                   i_collection.remove();
                   res.json({})
+                  var io = req.io;
+                 io.emit('updatecollection');
                 }}
 
           //if it has posts
@@ -455,15 +476,22 @@ Router.delete('/collection/:id', function(req, res){
                     supercollection.children.pull({_id: i_collection._id})
                     supercollection.save();
                     i_collection.remove()
-                    res.json({})} else {
+                    res.json({})
+                    var io = req.io;
+                   io.emit('updatecollection');
+                  } else {
 
                       i_collection.remove()
                       res.json({})
+                      var io = req.io;
+                     io.emit('updatecollection');
                     }}})}
 
                     else {
                     i_collection.remove()
                     res.json({})
+                    var io = req.io;
+                   io.emit('updatecollection');
                   }}
 
 
@@ -475,11 +503,15 @@ Router.delete('/collection/:id', function(req, res){
               } else {
                 i_collection.remove();
                 res.json({})
+                var io = req.io;
+               io.emit('updatecollection');
               }})}
 
               else {
               i_collection.remove();
               res.json({})
+              var io = req.io;
+             io.emit('updatecollection');
             }}}})})
 
         module.exports = Router;

@@ -31,11 +31,25 @@ mongoose.connect('mongodb://Hasstrup:Onosetale32@ds111066.mlab.com:11066/paper-s
 
 
 
+var server = app.listen(port, function(){
+  console.log('server is listening on %s', port)
+})
+
+var io = require('socket.io')(server)
+
+io.on('connection', function(socket){
+  console.log('a mood')
+})
+
 
 var postRoute = require('./routes/post')
 var collectionRoute = require('./routes/collection')
 var SearchRoute = require('./routes/search')
 
+app.use(function(req, res, next) {
+    req.io = io;
+    next();
+});
 
 app.use(postRoute);
 app.use(collectionRoute);
@@ -43,7 +57,3 @@ app.use(SearchRoute)
 
 
 app.use(collectionRoute);
-
-app.listen(port, function(){
-  console.log('server is listening on %s', port)
-})
