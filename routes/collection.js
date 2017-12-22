@@ -438,8 +438,11 @@ Router.delete('/collection/:id', function(req, res){
                   postxx.collectionn.name = ucollection.name
                   postxx.collectionn.id = ucollection._id
                   postxx.save()
-                  ucollection.posts.push(postxx)
-                  ucollection.save()
+                  Collection.findOneAndUpdate({'name' : 'Random'}, {$push: {posts: postxx}}, function(){
+                    console.log()
+                  })
+
+
                 }})}})})
 
                 //if it has a parent as well
