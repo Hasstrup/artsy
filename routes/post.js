@@ -12,7 +12,7 @@ Router.get('/posts', function(req, res){
     if(err){
       console.log('there is an error here' + err)
     } else {
-      res.json({posts:[]})
+      res.json({posts:posts})
     }})})
 
     Router.get('/api/posts', function(req, res){
