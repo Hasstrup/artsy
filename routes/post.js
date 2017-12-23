@@ -45,6 +45,8 @@ Router.get('/download/post/:id', function(req, res){
     } else {
       post.downloads = post.downloads + 1
       post.save()
+      var io = req.io;
+     io.emit('popular')
       res.json({post:post})
     }})})
 
