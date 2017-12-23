@@ -485,6 +485,8 @@ Router.delete('/collection/:id', function(req, res){
 
                     else {
                     i_collection.remove()
+                    var io = req.io;
+                   io.emit('updatecollection');
                     res.json({})
                   }}
 
@@ -496,16 +498,12 @@ Router.delete('/collection/:id', function(req, res){
                 console.log(err)
               } else {
                 i_collection.remove();
-                var io = req.io;
-               io.emit('updatecollection');
                 res.json({})
 
               }})}
 
               else {
               i_collection.remove();
-              var io = req.io;
-             io.emit('updatecollection');
               res.json({})
 
             }}}})})
