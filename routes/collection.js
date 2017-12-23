@@ -1,4 +1,4 @@
-"use strict";
+
 
 var express = require('express')
 var Router = express.Router();
@@ -50,11 +50,11 @@ Router.get('/collection/new', function(req, res){
         }
          else {
            if(collection.posts.length === 0) {
-             let postarray =  []
+             var postarray =  []
              res.json({postarray:postarray})
               }
             else {
-              let postarray =  []
+              var postarray =  []
               collection.posts.forEach (function(post){
               Post.findById(post._id, function(err, post){
                 if(err){

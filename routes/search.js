@@ -1,4 +1,4 @@
-"use strict";
+
 var express = require('express')
 var Router = express.Router();
 var Post = require('../models/post')
@@ -29,11 +29,11 @@ Router.get('/search', function(req, res) {
 
 Router.get('/search/:query', function(req, res, next){
   //this first part basically splits the incoming url into a string
-  let phase
-  let query
-  let phase1
-  let first
-  let second
+  var phase
+  var query
+  var phase1
+  var first
+  var second
   if(req.params.query.indexOf('-') == -1) {
     phase = req.params.query.toLowerCase()
     phase1 = phase.trim()
@@ -230,7 +230,7 @@ var secondlevel = collectionsxx.filter(collection => collection.posts.length !==
                 } else { }
 
                   var u_related = []
-                    let u2_related = []
+                    var u2_related = []
                   var fu_related = []
 
 
