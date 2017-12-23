@@ -162,12 +162,14 @@ Router.post('/post/oftheweek/:id', function(req, res){
        if(post.ofTheWeek === 'false'){
          post.ofTheWeek = 'true'
          post.save()
+         var io = req.io;
+         io.emit('popularx');
          res.json({})
        } else {
          post.ofTheWeek = 'false'
          post.save()
          var io = req.io;
-        io.emit('popular');
+         io.emit('popularx');
          res.json({})
 
        }}})})
