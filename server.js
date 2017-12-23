@@ -35,7 +35,7 @@ var server = app.listen(port, function(){
   console.log('server is listening on %s', port)
 })
 
-var io = require('socket.io')(server)
+var io = require('socket.io')(server, {pingTimeout: 30000})
 
 io.on('connection', function(socket){
   console.log('a mood')
