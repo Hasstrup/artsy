@@ -221,6 +221,8 @@ Router.put('/post/:id', function(req, res){
              collection.posts.push(post)
              collection.save()
              console.log('changed it')
+             var io = req.io
+             io.emit('updatecollection')
              res.json()
         }})}})}})})
 
