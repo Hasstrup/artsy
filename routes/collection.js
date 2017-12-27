@@ -300,6 +300,8 @@ Router.post('/collection/oftheweek/:id', function(req, res){
               collectionsxx.save()
               collection.ofTheWeek = 'true'
               collection.save()
+              var io = req.io;
+             io.emit('popular');
               res.json({})
             } else {
             collection.ofTheWeek = 'true'

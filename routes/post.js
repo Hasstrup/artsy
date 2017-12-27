@@ -101,6 +101,7 @@ Post.find({}, function(err, postslength){
               console.log(post.tags)
               var io = req.io;
              io.emit('update');
+             io.emit('updatecollection');
               res.json({status: 200})
 
             }})}
@@ -127,6 +128,7 @@ Post.find({}, function(err, postslength){
                 collection.save()
                 var io = req.io;
                io.emit('update');
+               io.emit('updatecollection');
                 res.json({})
 
               }})}}})
@@ -249,6 +251,7 @@ Router.delete('/post/:id', function(req, res){
               post.remove();
               var io = req.io;
              io.emit('update')
+             io.emit('updatecollection');
               res.json({})
             ;
           }})}})})
