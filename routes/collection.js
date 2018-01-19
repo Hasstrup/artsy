@@ -169,7 +169,7 @@ Router.post('/collection', function(req, res){
       var final = first.concat(second)
       var count = collectionxxx.length + 1
 
-      var newcollection = {name: final, ofTheWeek: 'false', count: count }
+      var newcollection = {name: final, ofTheWeek: 'false', count: count, author: req.body.author }
       Collection.create(newcollection, function(err, collection){
         if(err){
           console.log(err)

@@ -12,6 +12,7 @@ var collectionSchema = new mongoose.Schema ({
 }],
   name: String,
   count: Number,
+  author: String,
   isTopLevel: String,
   ofTheWeek: String,
   parent: {name: String, id:{
